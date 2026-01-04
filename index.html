@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SolarBill | Premium Energy Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --bg-primary: #08090A;
+        --bg-surface: #111317;
+        --accent-solar: #FFD335;
+      }
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: var(--bg-primary);
+        color: #FFFFFF;
+        margin: 0;
+        -webkit-font-smoothing: antialiased;
+      }
+      .solar-gradient {
+        background: linear-gradient(135deg, #FFD335 0%, #F59E0B 100%);
+      }
+      .solar-glow {
+        box-shadow: 0 0 20px rgba(255, 211, 53, 0.15);
+      }
+      .glass-card {
+        background: var(--bg-surface);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 24px;
+      }
+      .sidebar-item-active {
+        background: rgba(255, 211, 53, 0.1);
+        color: var(--accent-solar);
+      }
+      /* Custom scrollbar */
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #2A2D35; border-radius: 10px; }
+      ::-webkit-scrollbar-thumb:hover { background: #3F444E; }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-up {
+        animation: fadeIn 0.5s ease-out forwards;
+      }
+    </style>
+    <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.460.0?deps=react@19.0.0",
+    "recharts": "https://esm.sh/recharts@2.12.7?deps=react@19.0.0",
+    "@google/genai": "https://esm.sh/@google/genai@1.34.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "vite": "https://esm.sh/vite@^7.3.0",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
+  }
+}
+</script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

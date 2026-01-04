@@ -1,0 +1,7 @@
+{
+  "name": "Solar Tenant Billing System",
+  "description": "A comprehensive cloud-based platform for property owners to manage solar energy billing, tenant onboarding, and payment tracking with a solar-themed responsive interface.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
