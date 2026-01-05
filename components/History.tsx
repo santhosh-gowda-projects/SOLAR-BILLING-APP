@@ -1,14 +1,15 @@
 
 import React, { useState } from 'react';
-import { FileText, Download, CheckCircle2, Clock, Search, Printer, X, Receipt, Filter } from 'lucide-react';
+import { FileText, Download, CheckCircle2, Clock, Search, Printer, X, Receipt, Filter, ArrowLeft } from 'lucide-react';
 import { Bill } from '../types';
 
 interface HistoryProps {
   bills: Bill[];
   setBills: React.Dispatch<React.SetStateAction<Bill[]>>;
+  onBack: () => void;
 }
 
-const History: React.FC<HistoryProps> = ({ bills, setBills }) => {
+const History: React.FC<HistoryProps> = ({ bills, setBills, onBack }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'ALL' | 'PAID' | 'PENDING'>('ALL');
   const [showReceipt, setShowReceipt] = useState<Bill | null>(null);
@@ -38,6 +39,14 @@ const History: React.FC<HistoryProps> = ({ bills, setBills }) => {
 
   return (
     <div className="space-y-6 md:space-y-12">
+      <button 
+        onClick={onBack}
+        className="flex items-center gap-2 text-white/40 hover:text-amber-400 transition-colors group mb-4"
+      >
+        <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+        <span className="text-[10px] font-black uppercase tracking-[0.2em]">Back to Dashboard</span>
+      </button>
+
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
           <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-1">Ledger Records</h2>
@@ -49,7 +58,6 @@ const History: React.FC<HistoryProps> = ({ bills, setBills }) => {
         </button>
       </div>
 
-      {/* Filter Toolbar */}
       <div className="flex flex-col md:flex-row gap-3">
          <div className="relative flex-1">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={18} />
@@ -68,7 +76,6 @@ const History: React.FC<HistoryProps> = ({ bills, setBills }) => {
         </div>
       </div>
 
-      {/* Mobile Card List */}
       <div className="md:hidden space-y-4">
         {filteredBills.map((bill) => (
           <div key={bill.id} className="bg-[#111317] p-5 rounded-3xl border border-white/5 active:bg-white/[0.02] transition-colors">
@@ -101,17 +108,15 @@ const History: React.FC<HistoryProps> = ({ bills, setBills }) => {
             </div>
 
             <div className="pt-4 flex gap-2">
-              {bill.status === 'PENDING' ? (
-                <button onClick={() => handleMarkAsPaid(bill.id)} className="flex-1 py-3 bg-[#34D399] text-black rounded-xl text-xs font-black uppercase tracking-widest">Settle Bill</button>
-              ) : (
-                <button onClick={() => setShowReceipt(bill)} className="flex-1 py-3 bg-white/5 text-white/50 rounded-xl text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2"><Printer size={14} /> Receipt</button>
+              <button onClick={() => setShowReceipt(bill)} className="flex-1 py-3 bg-white/5 text-white/50 rounded-xl text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2">View Receipt</button>
+              {bill.status === 'PENDING' && (
+                <button onClick={() => handleMarkAsPaid(bill.id)} className="flex-1 py-3 bg-amber-500 text-black rounded-xl text-xs font-black uppercase tracking-widest">Mark Paid</button>
               )}
             </div>
           </div>
         ))}
       </div>
 
-      {/* Desktop Table View */}
       <div className="hidden md:block bg-[#111317] rounded-[32px] border border-white/5 overflow-hidden">
         <table className="w-full text-left">
           <thead>
@@ -151,11 +156,12 @@ const History: React.FC<HistoryProps> = ({ bills, setBills }) => {
                   )}
                 </td>
                 <td className="px-10 py-8 text-right">
-                  {bill.status === 'PENDING' ? (
-                    <button onClick={() => handleMarkAsPaid(bill.id)} className="px-5 py-2.5 bg-[#34D399] text-black rounded-xl text-[11px] font-black uppercase tracking-widest hover:scale-[1.05] active:scale-95 transition-all shadow-lg shadow-[#34D399]/10">Settle</button>
-                  ) : (
-                    <button onClick={() => setShowReceipt(bill)} className="px-5 py-2.5 bg-white/5 text-white/70 hover:text-white rounded-xl text-[11px] font-black uppercase tracking-widest border border-white/5 flex items-center gap-2 ml-auto"><Printer size={14} /> Receipt</button>
-                  )}
+                  <div className="flex items-center justify-end gap-3">
+                    <button onClick={() => setShowReceipt(bill)} className="p-3 text-white/20 hover:text-white transition-colors bg-white/5 rounded-xl"><Printer size={18} /></button>
+                    {bill.status === 'PENDING' && (
+                      <button onClick={() => handleMarkAsPaid(bill.id)} className="px-5 py-2.5 bg-[#34D399] text-black rounded-xl text-[11px] font-black uppercase tracking-widest hover:scale-[1.05] active:scale-95 transition-all shadow-lg shadow-[#34D399]/10">Settle</button>
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}
@@ -163,34 +169,50 @@ const History: React.FC<HistoryProps> = ({ bills, setBills }) => {
         </table>
       </div>
 
-      {/* Modern Receipt Modal */}
       {showReceipt && (
         <div className="fixed inset-0 z-[100] flex items-end md:items-center justify-center p-0 md:p-6 bg-black/90 backdrop-blur-xl animate-in fade-in">
           <div className="bg-[#111317] w-full max-w-lg rounded-t-[40px] md:rounded-[48px] shadow-2xl border-t md:border border-white/10 overflow-hidden relative">
             <div className="solar-gradient p-10 md:p-12 text-black text-center relative">
-              <button onClick={() => setShowReceipt(null)} className="absolute top-6 right-6 p-2 bg-black/10 rounded-xl"><X size={20} /></button>
+              <button onClick={() => setShowReceipt(null)} className="absolute top-6 right-6 p-2 bg-black/10 rounded-xl hover:bg-black/20 transition-colors"><X size={20} /></button>
               <div className="w-16 h-16 bg-black/10 rounded-3xl flex items-center justify-center mx-auto mb-4">
                 <Receipt size={32} />
               </div>
-              <h3 className="text-3xl font-black italic tracking-tighter">Paid Invoice</h3>
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mt-1">Verified Transaction</p>
+              <h3 className="text-3xl font-black italic tracking-tighter">{showReceipt.status === 'PAID' ? 'Digital Receipt' : 'Invoice Pending'}</h3>
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mt-1">Energy Ledger Node #{showReceipt.id.split('-')[1]}</p>
             </div>
-            <div className="p-8 md:p-14 space-y-8">
+            
+            <div className="p-8 md:p-12 space-y-10">
               <div className="text-center">
-                <p className="text-white/30 text-[10px] font-black uppercase tracking-widest mb-1">Settled Amount</p>
+                <p className="text-white/30 text-[10px] font-black uppercase tracking-widest mb-2">Grand Total</p>
                 <h4 className="text-6xl font-black tracking-tighter">₹{showReceipt.totalAmount}</h4>
               </div>
+
+              <div className="bg-white p-6 rounded-[32px] w-fit mx-auto shadow-2xl shadow-white/5">
+                <img 
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=upi://pay?pa=landlord@upi%26pn=SolarBill%26am=${showReceipt.totalAmount}%26cu=INR%26tn=SolarBill-${showReceipt.id}`} 
+                  alt="Payment QR"
+                  className="w-40 h-40"
+                />
+              </div>
+              <p className="text-center text-[10px] font-black text-white/20 uppercase tracking-widest">Scan to Pay via UPI</p>
+
               <div className="grid grid-cols-2 gap-y-6 pt-8 border-t border-white/5">
                 <div>
-                  <p className="text-white/30 text-[10px] font-black uppercase tracking-widest mb-1">Consumer</p>
+                  <p className="text-white/30 text-[10px] font-black uppercase tracking-widest mb-1">Resident</p>
                   <p className="font-bold text-base">{showReceipt.tenantName}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-white/30 text-[10px] font-black uppercase tracking-widest mb-1">Receipt ID</p>
-                  <p className="font-mono text-amber-500 font-black text-sm">#{showReceipt.id}</p>
+                  <p className="text-white/30 text-[10px] font-black uppercase tracking-widest mb-1">Period</p>
+                  <p className="font-bold text-base">{showReceipt.billingMonth}</p>
                 </div>
               </div>
-              <button onClick={() => alert('Opening PDF...')} className="w-full py-4 bg-[#34D399] text-black rounded-2xl font-black text-lg shadow-lg">Download Receipt</button>
+
+              <div className="flex gap-3">
+                <button onClick={() => window.print()} className="flex-1 py-4 bg-white/5 text-white/50 rounded-2xl font-black text-xs uppercase tracking-widest border border-white/5 hover:bg-white/10 hover:text-white transition-all">Print PDF</button>
+                {showReceipt.status === 'PENDING' && (
+                  <button onClick={() => { handleMarkAsPaid(showReceipt.id); setShowReceipt(null); }} className="flex-[2] py-4 bg-[#34D399] text-black rounded-2xl font-black text-sm uppercase tracking-widest shadow-lg">Mark as Settled</button>
+                )}
+              </div>
             </div>
           </div>
         </div>

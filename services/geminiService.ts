@@ -3,8 +3,8 @@ import { GoogleGenAI } from "@google/genai";
 
 export const getEnergyInsights = async (units: number, month: string) => {
   try {
-    // Initialized GoogleGenAI client using process.env.API_KEY || 'FAKE_API_KEY_FOR_DEVELOPMENT' directly
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || 'FAKE_API_KEY_FOR_DEVELOPMENT' });
+    // Initialized GoogleGenAI client using process.env.API_KEY directly
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: `Provide 3 short, helpful energy-saving tips for a tenant who consumed ${units} units of solar energy in ${month}. Keep it concise and encouraging.`,
@@ -18,8 +18,8 @@ export const getEnergyInsights = async (units: number, month: string) => {
 
 export const getBillingSummary = async (bills: any[]) => {
   try {
-    // Initialized GoogleGenAI client using process.env.API_KEY || 'FAKE_API_KEY_FOR_DEVELOPMENT' directly
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || 'FAKE_API_KEY_FOR_DEVELOPMENT' });
+    // Initialized GoogleGenAI client using process.env.API_KEY directly
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const prompt = `Analyze these billing records: ${JSON.stringify(bills)}. Provide a one-sentence summary of revenue trends and one action item for the property owner.`;
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',

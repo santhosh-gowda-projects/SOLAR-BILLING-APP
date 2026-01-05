@@ -1,19 +1,28 @@
 
 import React from 'react';
-import { Settings, Save, History as HistoryIcon, TrendingUp, TrendingDown, Info } from 'lucide-react';
+import { Settings, Save, History as HistoryIcon, TrendingUp, TrendingDown, Info, ArrowLeft } from 'lucide-react';
 
 interface PricingProps {
   rates: { residential: number, commercial: number, gst: number, fixedCharge: number };
   setRates: React.Dispatch<React.SetStateAction<{ residential: number, commercial: number, gst: number, fixedCharge: number }>>;
+  onBack: () => void;
 }
 
-const Pricing: React.FC<PricingProps> = ({ rates, setRates }) => {
+const Pricing: React.FC<PricingProps> = ({ rates, setRates, onBack }) => {
   const handleSave = () => {
     alert('Global Tariff updated and applied to system.');
   };
 
   return (
     <div className="space-y-10 animate-in slide-in-from-right-6 duration-700">
+      <button 
+        onClick={onBack}
+        className="flex items-center gap-2 text-white/40 hover:text-amber-400 transition-colors group mb-4"
+      >
+        <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+        <span className="text-[10px] font-black uppercase tracking-[0.2em]">Back to Dashboard</span>
+      </button>
+
       <div>
         <h2 className="text-4xl font-black text-white tracking-tight">Tariff Governance</h2>
         <p className="text-slate-400 mt-1 font-medium text-lg">Define unit pricing, local taxes, and fixed infrastructure costs.</p>

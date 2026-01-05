@@ -16,8 +16,11 @@ export interface Tenant {
   name: string;
   phone: string;
   aadhaar: string;
+  address: string;
   photoUrl: string;
+  rentalAgreementUrl?: string;
   propertyType: PropertyType;
+  houseId: string;
   meterNumber: string;
   baseRate: number;
   status: 'ACTIVE' | 'ARCHIVED';
@@ -43,6 +46,15 @@ export interface Owner {
   id: string;
   name: string;
   phone: string;
+  email?: string;
+  aadhaar?: string;
+  houseName?: string;
+  address?: string;
+  photoUrl?: string;
+  buildingPhotos?: string[];
+  rrNumber?: string;
+  solarProjectCost?: number;
   tenantCount: number;
   totalRevenue: number;
+  status?: 'ACTIVE' | 'SUSPENDED' | 'PENDING';
 }

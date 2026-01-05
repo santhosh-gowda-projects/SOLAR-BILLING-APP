@@ -19,26 +19,30 @@ export const MOCK_OWNERS: Owner[] = [
 
 export const MOCK_TENANTS: Tenant[] = [
   {
-    id: 't1',
+    id: 'T-8821',
     ownerId: 'o1',
     name: 'Suresh Raina',
     phone: '9988776655',
     aadhaar: 'XXXX XXXX 1234',
+    address: 'Flat 4B, Sunshine Apartments, Bengaluru, KA',
     photoUrl: 'https://picsum.photos/seed/suresh/200/200',
     propertyType: 'RESIDENTIAL',
+    houseId: 'FLAT-4B',
     meterNumber: 'MTR-101-ABC',
     baseRate: 8.5,
     status: 'ACTIVE',
     onboardedDate: '2023-01-15',
   },
   {
-    id: 't2',
+    id: 'T-9910',
     ownerId: 'o1',
     name: 'Meena Gupta',
     phone: '9911223344',
     aadhaar: 'XXXX XXXX 5678',
+    address: 'Shop 12, Ground Floor, Galaxy Mall, Bengaluru, KA',
     photoUrl: 'https://picsum.photos/seed/meena/200/200',
     propertyType: 'COMMERCIAL',
+    houseId: 'SHOP-12',
     meterNumber: 'MTR-102-XYZ',
     baseRate: 12.0,
     status: 'ACTIVE',
@@ -49,7 +53,7 @@ export const MOCK_TENANTS: Tenant[] = [
 export const MOCK_BILLS: Bill[] = [
   {
     id: 'b1',
-    tenantId: 't1',
+    tenantId: 'T-8821',
     tenantName: 'Suresh Raina',
     billingMonth: 'October 2023',
     previousReading: 1250,
@@ -63,7 +67,7 @@ export const MOCK_BILLS: Bill[] = [
   },
   {
     id: 'b2',
-    tenantId: 't1',
+    tenantId: 'T-8821',
     tenantName: 'Suresh Raina',
     billingMonth: 'November 2023',
     previousReading: 1345,
